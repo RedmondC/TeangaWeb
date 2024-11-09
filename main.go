@@ -23,6 +23,8 @@ func main() {
 	http.HandleFunc("/get-subscription", getSubscription)
 	http.HandleFunc("/toggle-subscription", toggleSubscription)
 
+	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
+
 	log.Println("Server started on http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
@@ -57,6 +59,7 @@ func getEditableUserName(w http.ResponseWriter, r *http.Request) {
 func updateUsername(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	user.Username = r.FormValue("username")
+	print(user.Username)
 	w.Write([]byte(`<span id="username-display">` + user.Username + `</span>`)) // Send updated username back to client
 }
 
