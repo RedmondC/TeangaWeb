@@ -1,10 +1,15 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"html/template"
 	"log"
 	"net/http"
+	"teangaWeb/templates"
+
+	firebase "firebase.google.com/go"
+	"google.golang.org/api/option"
 )
 
 type User struct {
@@ -14,9 +19,35 @@ type User struct {
 
 var user = User{Username: "john_doe", Subscription: "Free"}
 
+const (
+	firebaseConfigFile = "path/to/your/firebaseConfig.json"
+	firebaseDBURL      = "https://your-firebase-project.firebaseio.com"
+)
+
+var (
+	ctx context.Context
+	app *firebase.App
+)
+
 func main() {
+	// Initialize Firebase
+	ctx = context.Background()
+	opt := option.WithCredentialsFile(firebaseConfigFile)
+	app, err := firebase.NewApp(ctx, nil, opt)
+	if err != nil {
+		log.Fatalf("Firebase initialization error: %v\n", err)
+	}
+
+	// Initialize Firestore
+	temp, err := app.DatabaseWithURL(ctx, firebaseDBURL)
+	if err != nil {
+		log.Fatalf("Firestore initialization error: %v\n", err)
+	}
+
+	temp = temp
 	http.HandleFunc("/", serveTemplate)
 	http.HandleFunc("/login", login)
+	http.HandleFunc("/login-container", loginContainer)
 	http.HandleFunc("/get-username", getUsername)
 	http.HandleFunc("/get-editable-username", getEditableUserName)
 	http.HandleFunc("/update-username", updateUsername)
@@ -34,12 +65,17 @@ func serveTemplate(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
+func loginContainer(w http.ResponseWriter, r *http.Request) {
+	templates.Login(false, "").Render(context.Background(), w)
+}
+
 func login(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
 	if r.FormValue("email") == "colin@colin.com" && r.FormValue("password") == "password" {
-		tmpl := template.Must(template.ParseFiles("templates/userPage.html"))
-		tmpl.Execute(w, nil)
+		templates.UserPage().Render(context.Background(), w)
+	} else {
+		templates.Login(true, "Incorrect credentials").Render(context.Background(), w)
 	}
 }
 
@@ -59,8 +95,8 @@ func getEditableUserName(w http.ResponseWriter, r *http.Request) {
 func updateUsername(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	user.Username = r.FormValue("username")
-	print(user.Username)
-	w.Write([]byte(`<span id="username-display">` + user.Username + `</span>`)) // Send updated username back to client
+
+	w.Write([]byte(`<span id="username-display">` + user.Username + `</span>`)) // move to templ
 }
 
 // Get current subscription
