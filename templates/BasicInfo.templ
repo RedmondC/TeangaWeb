@@ -1,0 +1,55 @@
+package templates
+
+templ BasicInfo() {
+	<div class="row">
+		<div id="basicInfo" class="column">
+			@Info(true)
+			<div class="spacer"></div>
+			@Info(false)
+		</div>
+
+		<img class="column" src="assets/LayeredScreens.png"/>
+	</div>
+}
+
+templ Info(asGaeilge bool) {
+	<div>
+		if asGaeilge {
+			Fáilte go dtí an suíomh gréasáin Teanga! 
+		} else {
+			Welcome to the Teanga website!
+		}
+		<br/>
+		<br/>
+		if asGaeilge {
+			Má go bhfuil aon ceist nó gearán agat, ná bíodh aon drogall ort rpóst a chur oprainn ar support@teanga.eu.
+		} else {
+			If you have any questions or complaints please dont hesitate to send us an email at support@teanga.eu! 
+		}
+		<br/>
+		<br/>
+		if asGaeilge {
+			Chun ár aip a íoslódáil, lean na nascanna seo:
+		} else {
+			To download our App please follow these links:
+		}
+		<br/>
+		<br/>
+		<div>
+			<!-- android and apple links -->
+		</div>
+		if asGaeilge {
+			Dála an scéal, tá ár aip a fhad níos gleoite ná an suíomh seo!
+		} else {
+			By the way, our app is a lot nicer than this website!
+		}
+	</div>
+}
+
+
+
+templ BasicInfoLayout() {
+	@Home() {
+		@BasicInfo()
+	}
+}
