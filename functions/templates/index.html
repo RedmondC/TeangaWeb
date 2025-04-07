@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teanga</title>
+    <style>
+        #logo {
+          width: 55%;
+        }
+
+        body {
+          margin: auto;
+          padding: 20px;
+          text-align: center;
+        }
+
+        .row {
+          box-sizing: border-box;
+          width: 100%;
+          display: inline-block;
+        }
+
+        .row > * {
+          vertical-align: middle;
+        }
+
+        #basicInfo {
+          text-align: center;
+          font-family: serif;
+          color: rgb(59, 104, 133);
+          align-self: center;
+          box-sizing: border-box;
+          border: 5px double rgb(59, 104, 133);
+        }
+
+        .column {
+          box-sizing: border-box;
+          display: inline-block;
+          padding: 10px;
+          border-radius: 25px;
+          width: 50%;
+        }
+
+        .badge {
+          padding: 10px;
+          display: inline-block;
+            vertical-align: middle;
+        }
+
+        .spacer {
+          width: 75%;
+          height: 2px;
+          margin: 25px 12.5% 25px 12.5%;
+          background-color: rgb(59, 104, 133);
+        }
+
+        .container {
+          height: 50%;
+          max-width: 30%;
+        }
+
+        @media (orientation: portrait) {
+          #logo {
+            width: 80%;
+          }
+
+          .column {
+            width: 100%;
+          }
+
+          .spacer {
+            width: 75%;
+            height: 2px;
+            margin: 5px 12.5% 5px 12.5%;
+            background-color: rgb(59, 104, 133);
+          }
+
+          #basicInfo {
+            width: 100%;
+          }
+
+          .container {
+            height: 6vh;
+            max-width: 80%;
+            display: inline-block;
+          }
+        }
+    </style>
+</head>
+<body>
+<img id="logo" src='{{logo}}' alt="Logo">
+
+<div class="row">
+    <div id="basicInfo" class="column">
+        <div>
+            Fáilte go dtí an suíomh gréasáin Teanga!
+            <br><br>
+
+            Má go bhfuil aon ceist nó gearán agat, ná bíodh aon drogall ort r-post a chur orainn ar
+            <a href="mailto:support@teanga.eu">support@teanga.eu</a>.
+            <br><br>
+
+            Chun áir aip a íoslódáil, lean na nascanna seo:
+            <br><br>
+
+            <div>
+              <a class="badge" href="https://play.google.com/store" target="_blank">
+                  <img
+                    src='{{google_badge}}'
+                    alt="Get it on Google Play"
+                    style="height: 60px;"
+                  >
+                </a>
+                <a class="badge" href="https://www.apple.com/app-store/" target="_blank">
+                  <img
+                    src='{{apple_badge}}'
+                    alt="Get it on the Apple app store"
+                    style="height: 60px;"
+                  >
+                </a>
+            </div>
+
+            Dála an scéal, tá ár aip a fhad níos gleoite ná an suíomh seo!
+        </div>
+
+        <div class="spacer"></div>
+
+        <div>
+            Welcome to the Teanga website!
+            <br><br>
+
+            If you have any questions or complaints please don't hesitate to email us at
+            <a href="mailto:support@teanga.eu">support@teanga.eu</a>.
+            <br><br>
+
+            To download our App please follow these links:
+            <br><br>
+
+            <div class="row">
+                <a class="badge" href="https://play.google.com/store" target="_blank">
+                  <img
+                    src='{{google_badge}}'
+                    alt="Get it on Google Play"
+                    style="height: 60px;"
+                  >
+                </a>
+                <a class="badge" href="https://www.apple.com/app-store/" target="_blank">
+                  <img
+                    src='{{apple_badge}}'
+                    alt="Get it on the Apple app store"
+                    style="height: 60px;"
+                  >
+                </a>
+            </div>
+
+            By the way, our app is a lot nicer than this website!
+        </div>
+    </div>
+    <img class="column" src='{{layered_screens}}'>
+</div>
+</body>
+</html>
