@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51acbc19-a4e0-4cae-984b-e111bcfc9dab" name="Changes" comment="" />
+    <list default="true" id="51acbc19-a4e0-4cae-984b-e111bcfc9dab" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/functions/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/functions/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/functions/templates/index.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -52,7 +55,8 @@
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "basics__upgrade",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/colinredmond/AndroidStudioProjects/TeangaWeb"
+    "last_opened_file_path": "/Users/colinredmond/AndroidStudioProjects/TeangaWeb",
+    "settings.editor.selected.configurable": "editor.preferences.webOptions"
   }
 }]]></component>
   <component name="RecentsManager">

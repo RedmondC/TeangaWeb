@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teanga</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Teanga</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
     <body>
         <img id="logo" src='{{logo}}' alt="Logo">
 
-        <div id="basicInfo" class="column">
-            {{irish_information | safe}}
+        <div class="row">
+            <div id="basicInfo" class="column">
+                {{irish_information | safe}}
 
-            <div class="spacer"></div>
+                <div class="spacer"></div>
 
-            {{english_information | safe}}
+                {{english_information | safe}}
+            </div>
+
+            <img class="column" src='{{layered_screens}}'>
         </div>
-
-        <img class="column" src='{{layered_screens}}'>
     </body>
 </html>
