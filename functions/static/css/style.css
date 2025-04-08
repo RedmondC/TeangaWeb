@@ -1,6 +1,5 @@
 <style>
-    #logo {
-      width: 55%;
+    p {
     }
 
     body {
@@ -19,16 +18,17 @@
       vertical-align: middle;
     }
 
+    #logo {
+      width: 55%;
+    }
+
     #basicInfo {
-      text-align: center;
-      font-family: serif;
-      color: rgb(59, 104, 133);
-      align-self: center;
-      box-sizing: border-box;
-      width: 100%;
-      display: inline-block;
-      vertical-align: middle;
-      border: 5px double rgb(59, 104, 133);
+       text-align: center;
+       font-family: serif;
+       color: rgb(59, 104, 133);
+       align-self: center;
+       box-sizing: border-box;
+       border: 5px double rgb(59, 104, 133);
     }
 
     .column {
@@ -71,6 +71,10 @@
         height: 2px;
         margin: 5px 12.5% 5px 12.5%;
         background-color: rgb(59, 104, 133);
+      }
+
+      #basicInfo {
+        width: 100%;
       }
 
       .container {
