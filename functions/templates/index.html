@@ -9,16 +9,14 @@
     <body>
         <img id="logo" src='{{logo}}' alt="Logo">
 
-        <div class="row">
-            <div id="basicInfo" class="column">
-                {{irish_information | safe}}
+        <div id="basicInfo" class="column">
+            {{irish_information | safe}}
 
-                <div class="spacer"></div>
+            <div class="spacer"></div>
 
-                {{english_information | safe}}
-            </div>
-
-            <img class="column" src='{{layered_screens}}'>
+            {{english_information | safe}}
         </div>
+
+        <img class="column" src='{{layered_screens}}'>
     </body>
 </html>
