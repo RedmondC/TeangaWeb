@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51acbc19-a4e0-4cae-984b-e111bcfc9dab" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cloudbuild.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/static/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/templates/badges.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/templates/information.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/firestore.indexes.json" beforeDir="false" afterPath="$PROJECT_DIR$/firestore.indexes.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/functions/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/functions/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/functions/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +57,7 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "firebase__website",
+    "git-widget-placeholder": "basics__upgrade",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/colinredmond/AndroidStudioProjects/TeangaWeb"
   }

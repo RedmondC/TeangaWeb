@@ -1,0 +1,83 @@
+<style>
+    #logo {
+      width: 55%;
+    }
+
+    body {
+      margin: auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .row {
+      box-sizing: border-box;
+      width: 100%;
+      display: inline-block;
+    }
+
+    .row > * {
+      vertical-align: middle;
+    }
+
+    #basicInfo {
+      text-align: center;
+      font-family: serif;
+      color: rgb(59, 104, 133);
+      align-self: center;
+      box-sizing: border-box;
+      border: 5px double rgb(59, 104, 133);
+    }
+
+    .column {
+      box-sizing: border-box;
+      display: inline-block;
+      padding: 10px;
+      border-radius: 25px;
+      width: 50%;
+    }
+
+    .badge {
+      padding: 10px;
+      display: inline-block;
+        vertical-align: middle;
+    }
+
+    .spacer {
+      width: 75%;
+      height: 2px;
+      margin: 25px 12.5% 25px 12.5%;
+      background-color: rgb(59, 104, 133);
+    }
+
+    .container {
+      height: 50%;
+      max-width: 30%;
+    }
+
+    @media (orientation: portrait) {
+      #logo {
+        width: 80%;
+      }
+
+      .column {
+        width: 100%;
+      }
+
+      .spacer {
+        width: 75%;
+        height: 2px;
+        margin: 5px 12.5% 5px 12.5%;
+        background-color: rgb(59, 104, 133);
+      }
+
+      #basicInfo {
+        width: 100%;
+      }
+
+      .container {
+        height: 6vh;
+        max-width: 80%;
+        display: inline-block;
+      }
+    }
+</style>
