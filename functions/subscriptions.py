@@ -25,11 +25,9 @@ class Subscription:
     purchase_id: str
     start_date: int
     expire_date: int
-    is_active: bool
     history: List[SubscriptionHistoryEntry]
 
     def update(self, new_sub: "Subscription") -> "Subscription":
-        self.is_active = new_sub.is_active
         self.start_date = new_sub.start_date
         self.expire_date = new_sub.expire_date
         self.history.extend(new_sub.history)
@@ -52,7 +50,6 @@ def get_subscription_status(transaction_ids: List[str]) -> UserSubscriptions:
                 purchase_id=data["purchaseId"],
                 start_date=data["startDate"],
                 expire_date=data["expireDate"],
-                is_active=data["isActive"],
                 history=[
                     SubscriptionHistoryEntry(**entry) for entry in data["history"]
                 ],
@@ -68,7 +65,6 @@ def write_subscriptions_to_db(user_subscriptions: UserSubscriptions):
             "purchaseId": subscription.purchase_id,
             "startDate": subscription.start_date,
             "expireDate": subscription.expire_date,
-            "isActive": subscription.is_active,
             "history": [entry.__dict__ for entry in subscription.history],
         }
         subscriptions_reference.document(subscription.purchase_id).set(doc_data)
