@@ -24,7 +24,6 @@ def read_private_key(path_to_p8_file):
 def verify_google():
     data = request.get_json()
     try:
-        print("here")
         handle_purchase(data.get("subscriptionNotification"))
     except HttpError:
         logging.error(f"Google - A http error occurred for request: {data}")
