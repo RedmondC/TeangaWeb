@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51acbc19-a4e0-4cae-984b-e111bcfc9dab" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/SubscriptionKey_H86HXPCM4S.p8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloudbuild.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cloudbuild.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/apple_verification.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/apple_verification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/google_verification.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/google_verification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/subscriptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/subscriptions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

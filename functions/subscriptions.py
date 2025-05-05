@@ -6,9 +6,7 @@ from dotenv import load_dotenv
 from google.cloud import firestore
 
 load_dotenv()
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv(
-    "GOOGLE_APPLICATION_CREDENTIALS"
-)
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_services.json"
 
 db = firestore.Client()
 subscriptions_reference = db.collection("subscriptions")
@@ -73,9 +71,11 @@ def write_subscriptions_to_db(user_subscriptions: UserSubscriptions):
 
 
 def update_subscription_status(
-    new_subscriptions: List[Subscription]
+    new_subscriptions: List[Subscription],
 ) -> UserSubscriptions:
-    user_subs = get_subscription_status(list(map(get_transaction_id,new_subscriptions)))
+    user_subs = get_subscription_status(
+        list(map(get_transaction_id, new_subscriptions))
+    )
     merged = merge_subscriptions(
         user_subs.subscriptions,
         new_subscriptions,
@@ -84,8 +84,10 @@ def update_subscription_status(
     write_subscriptions_to_db(user_subs)
     return user_subs
 
+
 def get_transaction_id(sub: Subscription) -> str:
     return sub.purchaseId
+
 
 def merge_subscriptions(
     current: List[Subscription], new_subs: List[Subscription]

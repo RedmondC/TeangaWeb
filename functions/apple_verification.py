@@ -24,12 +24,8 @@ signed_data_verifier = SignedDataVerifier(
 
 
 def apple_notifications(notification: str):
-    try:
-        payload, _ = parse_payload(notification)
-        print("Received ", payload)
-    except VerificationException as e:
-        logging.exception("Failed to handle Apple notification: %s", e)
-        return jsonify({"error": "internal server error"}), 500
+    payload, _ = parse_payload(notification)
+    print("Received ", payload)
 
 
 def parse_payload(signed_payload: str):

@@ -1,18 +1,24 @@
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
-from subscriptions import update_subscription_status, Subscription, SubscriptionHistoryEntry
+from subscriptions import (
+    update_subscription_status,
+    Subscription,
+    SubscriptionHistoryEntry,
+)
+import os
+from json import loads
 
 
 def handle_purchase(data: dict):
-    credentials = service_account.Credentials.from_service_account_file(
-        "google_services.json"
+    credentials = service_account.Credentials.from_service_account_info(
+        loads(os.getenv("google_services"))
     )
 
     with build("androidpublisher", "v3", credentials=credentials) as service:
         for purchase in data["purchases"]:
-            result = service.purchases()
             result = (
-                result.subscriptions()
+                service.purchases()
+                .subscriptions()
                 .get(
                     packageName="com.teanga",
                     subscriptionId=purchase["productId"],
@@ -22,11 +28,16 @@ def handle_purchase(data: dict):
             )
 
             if result is not None:
-                write_to_db(result)
+                update_subscription_status(
+                    [convert_google_play_response_to_subscription(result)]
+                )
+                service.purchases().subscriptions().acknowledge(
+                    packageName="com.teanga",
+                    subscriptionId=purchase["productId"],
+                    token=purchase["token"],
+                    body={},
+                ).execute()
 
-
-def write_to_db(data: dict):
-    update_subscription_status(list(map(convert_google_play_response_to_subscription, data)))
 
 def convert_google_play_response_to_subscription(data: dict) -> Subscription:
     start_time = int(data.get("startTimeMillis", 0))

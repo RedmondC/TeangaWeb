@@ -10,6 +10,16 @@ steps:
     args: ['push', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME']
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "Fetching Apple and Google secrets from Secret Manager..."
+        gcloud secrets versions access latest --secret="subscriptions_private_key" > functions/SubscriptionsKey.p8
+        gcloud secrets versions access latest --secret="google_services" > functions/google_services.json
+
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args: [
       'run', 'deploy', '$_SERVICE_NAME',

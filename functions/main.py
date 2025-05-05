@@ -2,8 +2,9 @@ import logging
 
 from appstoreserverlibrary.api_client import AppStoreServerAPIClient, APIException
 from appstoreserverlibrary.models.Environment import Environment
+from googleapiclient.errors import HttpError
+from appstoreserverlibrary.signed_data_verifier import VerificationException
 from flask import Flask, request
-from future.backports.urllib.error import HTTPError
 
 from apple_verification import apple_notifications
 from google_verification import handle_purchase
@@ -24,12 +25,12 @@ def verify_google():
     data = request.get_json()
     try:
         handle_purchase(data)
-    except HTTPError as e:
-        logging.error("Google - A http error occurred: ", e)
-        return "An error occurred", e.response.status_code
-    except Exception as e:
-        logging.error("Google - An unexpected error occurred: ", e)
-        return "An unexpected occurred.", 500
+    except HttpError:
+        logging.error("Google - A http error occurred for request: ", data)
+        return "An error occurred", 400
+    except Exception:
+        logging.error("Google - An unexpected error occurred for request: ", data)
+        return "An unexpected error occurred.", 500
 
     return "Success", 200
 
@@ -44,9 +45,10 @@ def verify_apple():
             return "Invalid JSON", 400
         else:
             apple_notifications(signed_payload)
-    except HTTPError as e:
-        logging.error("Apple - A http error occurred: ", e)
-        return "An error occurred", e.response.status_code
+
+    except VerificationException as e:
+        logging.exception("Failed to handle Apple notification: %s", e)
+        return "An error occurred", 400
     except Exception as e:
         logging.error("Apple - An unexpected error occurred: ", e)
         return "An unexpected occurred.", 500
