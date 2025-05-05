@@ -24,7 +24,7 @@ def read_private_key(path_to_p8_file):
 def verify_google():
     data = request.get_json()
     try:
-        handle_purchase(data)
+        handle_purchase(data.get("subscriptionNotification"))
     except HttpError:
         logging.error("Google - A http error occurred for request: ", data)
         return "An error occurred", 400
@@ -46,12 +46,12 @@ def verify_apple():
         else:
             apple_notifications(signed_payload)
 
-    except VerificationException as e:
-        logging.exception("Failed to handle Apple notification: %s", e)
+    except VerificationException:
+        logging.exception("Failed to handle Apple notification: ", data)
         return "An error occurred", 400
-    except Exception as e:
-        logging.error("Apple - An unexpected error occurred: ", e)
-        return "An unexpected occurred.", 500
+    except Exception:
+        logging.error("Apple - An unexpected error occurred for notification: ", data)
+        return "An unexpected error occurred.", 500
 
 
 @app.route("/")

@@ -14,22 +14,24 @@ subscriptions_reference = db.collection("subscriptions")
 
 @dataclass
 class SubscriptionHistoryEntry:
-    createdAt: int
-    actionTitle: str
+    created_at: int
+    action_title: str
     description: str
 
 
 @dataclass
 class Subscription:
-    productId: str
-    purchaseId: str
-    startDate: int
-    isActive: bool
+    product_id: str
+    purchase_id: str
+    start_date: int
+    expire_date: int
+    is_active: bool
     history: List[SubscriptionHistoryEntry]
 
     def update(self, new_sub: "Subscription") -> "Subscription":
-        self.isActive = new_sub.isActive
-        self.startDate = new_sub.startDate
+        self.is_active = new_sub.is_active
+        self.start_date = new_sub.start_date
+        self.expire_date = new_sub.expire_date
         self.history.extend(new_sub.history)
         return self
 
@@ -46,10 +48,11 @@ def get_subscription_status(transaction_ids: List[str]) -> UserSubscriptions:
         if doc.exists:
             data = doc.to_dict()
             subscription = Subscription(
-                productId=data["productId"],
-                purchaseId=data["purchaseId"],
-                startDate=data["startDate"],
-                isActive=data["isActive"],
+                product_id=data["productId"],
+                purchase_id=data["purchaseId"],
+                start_date=data["startDate"],
+                expire_date=data["expireDate"],
+                is_active=data["isActive"],
                 history=[
                     SubscriptionHistoryEntry(**entry) for entry in data["history"]
                 ],
@@ -61,13 +64,14 @@ def get_subscription_status(transaction_ids: List[str]) -> UserSubscriptions:
 def write_subscriptions_to_db(user_subscriptions: UserSubscriptions):
     for subscription in user_subscriptions.subscriptions:
         doc_data = {
-            "productId": subscription.productId,
-            "purchaseId": subscription.purchaseId,
-            "startDate": subscription.startDate,
-            "isActive": subscription.isActive,
+            "productId": subscription.product_id,
+            "purchaseId": subscription.purchase_id,
+            "startDate": subscription.start_date,
+            "expireDate": subscription.expire_date,
+            "isActive": subscription.is_active,
             "history": [entry.__dict__ for entry in subscription.history],
         }
-        subscriptions_reference.document(subscription.purchaseId).set(doc_data)
+        subscriptions_reference.document(subscription.purchase_id).set(doc_data)
 
 
 def update_subscription_status(
@@ -86,7 +90,7 @@ def update_subscription_status(
 
 
 def get_transaction_id(sub: Subscription) -> str:
-    return sub.purchaseId
+    return sub.purchase_id
 
 
 def merge_subscriptions(
@@ -95,7 +99,7 @@ def merge_subscriptions(
     merged = current[:]
     for new_sub in new_subs:
         existing = next(
-            (sub for sub in merged if sub.productId == new_sub.productId), None
+            (sub for sub in merged if sub.product_id == new_sub.product_id), None
         )
         if existing:
             idx = merged.index(existing)
