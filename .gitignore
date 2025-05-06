@@ -1,0 +1,7 @@
+*/google_services.json
+*/client.json
+*.p8
+.idea/*
+functions/.env
+functions/__pycache__/*
+.DS_Store
