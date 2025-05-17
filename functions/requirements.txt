@@ -1,7 +1,6 @@
-firebase_functions~=0.1.0
 flask
 gunicorn
-google-api-python-client==2.1.0
+google-api-python-client>=2.169.0
 black
 requests
 google-cloud-firestore
