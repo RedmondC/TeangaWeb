@@ -2,8 +2,6 @@ flask
 gunicorn
 google-api-python-client>=2.169.0
 black
-requests
 google-cloud-firestore
-cryptography
 app-store-server-library
 python-dotenv

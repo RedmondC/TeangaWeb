@@ -2,13 +2,12 @@ import logging
 
 from appstoreserverlibrary.api_client import AppStoreServerAPIClient, APIException
 from appstoreserverlibrary.models.Environment import Environment
-from googleapiclient.errors import HttpError
 from appstoreserverlibrary.signed_data_verifier import VerificationException
-from flask import Flask, request
-
 from apple_verification import apple_notifications
 from google_verification import handle_purchase
+from googleapiclient.errors import HttpError
 from index_page import render_index
+from flask import Flask, request
 
 app = Flask(__name__, static_url_path="/static", static_folder="static")
 app.logger.setLevel(logging.INFO)
