@@ -13,12 +13,6 @@ app = Flask(__name__, static_url_path="/static", static_folder="static")
 app.logger.setLevel(logging.INFO)
 
 
-def read_private_key(path_to_p8_file):
-    with open(path_to_p8_file, "rb") as key_file:
-        private_key = key_file.read()
-    return private_key
-
-
 @app.route("/google-validate-purchases", methods=["POST"])
 def verify_google():
     data = request.get_json()
