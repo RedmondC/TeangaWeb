@@ -1,7 +1,7 @@
 import os
+
 from dataclasses import dataclass, field
 from typing import List
-
 from dotenv import load_dotenv
 from google.cloud import firestore
 

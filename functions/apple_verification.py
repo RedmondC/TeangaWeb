@@ -1,5 +1,6 @@
-from flask import jsonify
 import logging
+
+from flask import jsonify
 from appstoreserverlibrary.models.Environment import Environment
 from appstoreserverlibrary.signed_data_verifier import (
     VerificationException,

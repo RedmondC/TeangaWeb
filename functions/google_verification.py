@@ -1,14 +1,14 @@
 import logging
+import os
 
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
+from json import loads
 from subscriptions import (
     update_subscription_status,
     Subscription,
     SubscriptionHistoryEntry,
 )
-import os
-from json import loads
 
 
 def handle_purchase(data: dict):
