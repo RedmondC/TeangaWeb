@@ -1,14 +1,16 @@
 import os
 
 from dataclasses import dataclass, field
-from typing import List
-from dotenv import load_dotenv
+from google.oauth2 import service_account
 from google.cloud import firestore
+from typing import List
+from json import loads
 
-load_dotenv()
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_services.json"
+credentials = service_account.Credentials.from_service_account_info(
+        loads(os.environ["google_services"])
+    )
 
-db = firestore.Client()
+db = firestore.Client(credentials=credentials)
 subscriptions_reference = db.collection("subscriptions")
 
 
