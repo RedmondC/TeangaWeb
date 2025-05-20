@@ -12,8 +12,12 @@ from subscriptions import (
 
 
 def handle_purchase(data: dict):
+    google_services = os.environ.get('google_services')
+    if google_services is None:
+        print("google_services environment variable is missing!")
+
     credentials = service_account.Credentials.from_service_account_info(
-        loads(os.getenv("google_services"))
+        loads(google_services)
     )
 
     is_purchase, action_title, description = parse_notification(data)
