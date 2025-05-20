@@ -16,7 +16,6 @@ steps:
       '--image', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME',
       '--platform', 'managed',
       '--region', 'europe-west1',
-      '--allow-unauthenticated',
       '--set-secrets',
-      'google_services=projects/$PROJECT_ID/secrets/google_services:latest,subscriptions_private_key=projects/$PROJECT_ID/secrets/subscriptions_private_key:latest'
+      'google_services=google_services:latest,subscriptions_private_key=subscriptions_private_key:latest'
     ]
