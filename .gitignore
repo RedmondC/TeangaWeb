@@ -5,3 +5,9 @@ functions/google_services.json
 functions/.env
 functions/__pycache__/*
 .DS_Store
+*.pyc
+*.pyo
+*.pyd
+.env
+.git
+venv/
