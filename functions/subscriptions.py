@@ -6,8 +6,13 @@ from google.cloud import firestore
 from typing import List
 from json import loads
 
+google_services = os.environ.get('google_services')
+if google_services is None:
+    print("google_services environment variable is missing!")
+
+
 credentials = service_account.Credentials.from_service_account_info(
-        loads(os.environ["google_services"])
+        loads(google_services)
     )
 
 db = firestore.Client(credentials=credentials)
