@@ -8,6 +8,5 @@ functions/__pycache__/*
 *.pyc
 *.pyo
 *.pyd
-.env
 .git
 venv/

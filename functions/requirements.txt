@@ -4,4 +4,3 @@ google-api-python-client>=2.169.0
 black
 google-cloud-firestore
 app-store-server-library
-python-dotenv

@@ -3,8 +3,8 @@ substitutions:
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME', '.']
     dir: 'functions'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME', '.']
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME']
@@ -18,4 +18,6 @@ steps:
       '--region', 'europe-west1',
       '--set-secrets',
       'google_services=google_services:latest,subscriptions_private_key=subscriptions_private_key:latest'
+      '--set-env-vars',
+      'FLASK_SKIP_DOTENV=true'
     ]
