@@ -1,4 +1,5 @@
 import logging
+import os
 
 from appstoreserverlibrary.api_client import AppStoreServerAPIClient, APIException
 from appstoreserverlibrary.models.Environment import Environment
@@ -9,9 +10,17 @@ from googleapiclient.errors import HttpError
 from index_page import render_index
 from flask import Flask, request
 
+print("Starting Flask app...")
+
+# Check if secrets are available
+print("google_services is set:", bool(os.environ.get("google_services")))
+print("subscriptions_private_key is set:", bool(os.environ.get("subscriptions_private_key")))
+
+
 app = Flask(__name__, static_url_path="/static", static_folder="static")
 app.logger.setLevel(logging.INFO)
 
+print("Flask app created")
 
 @app.route("/google-validate-purchases", methods=["POST"])
 def verify_google():
