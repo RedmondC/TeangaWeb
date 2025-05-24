@@ -29,10 +29,12 @@ signed_data_verifier = SignedDataVerifier(
 )
 
 
-def apple_notifications(notification: str):
+def apple_notifications(notification: str, subscriptions_reference):
     payload, status = parse_payload(notification)
     if status == 200:
-        handle_subscription_event(payload)
+        handle_subscription_event(
+            payload, subscriptions_reference=subscriptions_reference
+        )
 
 
 def parse_payload(signed_payload: str):
@@ -49,7 +51,7 @@ def parse_payload(signed_payload: str):
         return jsonify({"error": "internal server error"}), 500
 
 
-def handle_subscription_event(decoded_data):
+def handle_subscription_event(decoded_data, subscriptions_reference):
     is_purchase, action_title, description = parse_notification(decoded_data)
     if is_purchase:
         update_subscription_status(
@@ -57,7 +59,8 @@ def handle_subscription_event(decoded_data):
                 convert_apple_notification_to_subscription(
                     decoded_data, action_title, description
                 )
-            ]
+            ],
+            subscriptions_reference=subscriptions_reference,
         )
 
 

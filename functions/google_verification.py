@@ -1,9 +1,6 @@
 import logging
-import os
 
 from googleapiclient.discovery import build
-from google.oauth2 import service_account
-from json import loads
 from subscriptions import (
     update_subscription_status,
     Subscription,
@@ -11,15 +8,7 @@ from subscriptions import (
 )
 
 
-def handle_purchase(data: dict):
-    google_services = os.environ.get('google_services')
-    if google_services is None:
-        print("google_services environment variable is missing!")
-
-    credentials = service_account.Credentials.from_service_account_info(
-        loads(google_services)
-    )
-
+def handle_purchase(data: dict, credentials, subscriptions_reference):
     is_purchase, action_title, description = parse_notification(data)
     if is_purchase:
         with build("androidpublisher", "v3", credentials=credentials) as service:
@@ -38,11 +27,10 @@ def handle_purchase(data: dict):
                 update_subscription_status(
                     [
                         convert_google_play_response_to_subscription(
-                            google_result,
-                            action_title,
-                            description
+                            google_result, action_title, description
                         )
-                    ]
+                    ],
+                    subscriptions_reference,
                 )
                 service.purchases().subscriptions().acknowledge(
                     packageName="com.teanga",
@@ -84,6 +72,7 @@ def convert_google_play_response_to_subscription(
     expire_date = int(data.get("expiryTimeMillis", 0))
     purchase_token = data.get("purchaseToken")
     subscription_id = data.get("subscriptionId")
+    print(f"converting response: ${data}")
 
     history_entry = SubscriptionHistoryEntry(
         created_at=start_date,
