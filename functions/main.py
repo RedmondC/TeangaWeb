@@ -41,7 +41,7 @@ def verify_google():
     try:
         handle_purchase(
             data=data.get("subscriptionNotification"),
-            event_time= int(data.get("eventTimeMillis")),
+            event_time= 123456789,#int(data.get("eventTimeMillis")),
             credentials=credentials,
             subscriptions_reference=subscriptions_reference,
         )
@@ -53,9 +53,7 @@ def verify_google():
         logging.error(e)
         return "An unexpected error occurred.", 500
 
-    return {
-        "Success!"
-    }, 200
+    return "Success!", 200
 
 
 @app.route("/user-update-apple", methods=["POST"])
