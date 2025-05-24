@@ -11,9 +11,8 @@ class SubscriptionHistoryEntry:
 
 @dataclass
 class Subscription:
-    user_id: str
     product_id: str
-    original_purchase_id: str
+    purchase_id: str
     start_date: int
     expire_date: int
     history: List[SubscriptionHistoryEntry]
@@ -32,7 +31,7 @@ class UserSubscriptions:
 
 def update_subscription_status(
     new_subscriptions: List[Subscription], subscriptions_reference
-) -> str:
+):
     user_subs = _get_subscription_status(
         new_subscriptions,
         subscriptions_reference=subscriptions_reference,
@@ -47,7 +46,6 @@ def update_subscription_status(
     _write_subscriptions_to_db(
         user_subs, subscriptions_reference=subscriptions_reference
     )
-    return user_subs.subscriptions.pop().user_id
 
 
 def _get_subscription_status(
@@ -55,13 +53,12 @@ def _get_subscription_status(
 ) -> UserSubscriptions:
     subscriptions = []
     for sub in new_subscriptions:
-        doc = subscriptions_reference.document(sub.user_id).collection("products").document(sub.product_id).get()
+        doc = subscriptions_reference.document(sub.purchase_id).get()
         if doc.exists:
             data = doc.to_dict()
             subscription = Subscription(
-                user_id=data["userId"],
                 product_id=data["productId"],
-                original_purchase_id=data["purchaseId"],
+                purchase_id=data["purchaseId"],
                 start_date=data["startDate"],
                 expire_date=data["expireDate"],
                 history=[
@@ -77,18 +74,17 @@ def _write_subscriptions_to_db(
 ):
     for subscription in user_subscriptions.subscriptions:
         doc_data = {
-            "userId": subscription.user_id,
             "productId": subscription.product_id,
-            "purchaseId": subscription.original_purchase_id,
+            "purchaseId": subscription.purchase_id,
             "startDate": subscription.start_date,
             "expireDate": subscription.expire_date,
             "history": [entry.__dict__ for entry in subscription.history],
         }
-        subscriptions_reference.document(subscription.user_id).collection("products").document(subscription.product_id).set(doc_data)
+        subscriptions_reference.document(subscription.purchase_id).set(doc_data)
 
 
 def _get_transaction_id(sub: Subscription) -> str:
-    return sub.original_purchase_id
+    return sub.purchase_id
 
 
 def _merge_subscriptions(

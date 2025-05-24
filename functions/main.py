@@ -39,8 +39,9 @@ subscriptions_reference = firestore.Client(credentials=credentials).collection(
 def verify_google():
     data = request.get_json()
     try:
-        user_id = handle_purchase(
+        handle_purchase(
             data=data.get("subscriptionNotification"),
+            event_time= int(data.get("eventTimeMillis")),
             credentials=credentials,
             subscriptions_reference=subscriptions_reference,
         )
@@ -53,7 +54,7 @@ def verify_google():
         return "An unexpected error occurred.", 500
 
     return {
-        "user_id": user_id
+        "Success!"
     }, 200
 
 
