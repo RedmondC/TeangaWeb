@@ -24,10 +24,10 @@ def handle_purchase(data: dict, credentials, subscriptions_reference):
             )
 
             if google_result is not None:
-                update_subscription_status(
+                user_id = update_subscription_status(
                     [
                         convert_google_play_response_to_subscription(
-                            google_result, action_title, description
+                            google_result, action_title, description, data.get("subscriptionId")
                         )
                     ],
                     subscriptions_reference,
@@ -38,6 +38,7 @@ def handle_purchase(data: dict, credentials, subscriptions_reference):
                     token=data.get("purchaseToken"),
                     body={},
                 ).execute()
+                return user_id
             else:
                 logging.error(
                     f"Failed to verify purchase id {data["subscriptionId"]} with token {data.get("purchaseToken")}."
@@ -66,13 +67,12 @@ def parse_notification(data: dict) -> (bool, str, str):
 
 
 def convert_google_play_response_to_subscription(
-    data: dict, action_title: str, history_description: str
+    data: dict, action_title: str, history_description: str, subscription_id: str
 ) -> Subscription:
     start_date = int(data.get("startTimeMillis", 0))
     expire_date = int(data.get("expiryTimeMillis", 0))
-    purchase_token = data.get("purchaseToken")
-    subscription_id = data.get("subscriptionId")
-    print(f"converting response: ${data}")
+    purchase_token = data.get("orderId")
+    user_id = data.get("obfuscatedExternalAccountId")
 
     history_entry = SubscriptionHistoryEntry(
         created_at=start_date,
@@ -81,8 +81,9 @@ def convert_google_play_response_to_subscription(
     )
 
     return Subscription(
+        user_id=user_id,
         product_id=subscription_id,
-        purchase_id=purchase_token,
+        original_purchase_id=purchase_token,
         start_date=start_date,
         expire_date=expire_date,
         history=[history_entry],

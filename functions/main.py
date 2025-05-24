@@ -39,7 +39,7 @@ subscriptions_reference = firestore.Client(credentials=credentials).collection(
 def verify_google():
     data = request.get_json()
     try:
-        handle_purchase(
+        user_id = handle_purchase(
             data=data.get("subscriptionNotification"),
             credentials=credentials,
             subscriptions_reference=subscriptions_reference,
@@ -52,7 +52,9 @@ def verify_google():
         logging.error(e)
         return "An unexpected error occurred.", 500
 
-    return "Success", 200
+    return {
+        "user_id": user_id
+    }, 200
 
 
 @app.route("/user-update-apple", methods=["POST"])

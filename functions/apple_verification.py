@@ -98,6 +98,7 @@ def convert_apple_notification_to_subscription(
     transaction = data.get("transactionInfo", {})
     renewal_info = data.get("renewalInfo", {})
 
+    user_id = "" # todo
     product_id = renewal_info.get("subscriptionId")
     purchase_id = transaction.get("transactionId")
     start_date = int(transaction.get("purchaseDate", 0))
@@ -115,8 +116,9 @@ def convert_apple_notification_to_subscription(
         start_date = renewal_info.get("recentSubscriptionStartDate")
 
     return Subscription(
+        user_id=user_id,
         product_id=product_id,
-        purchase_id=purchase_id,
+        original_purchase_id=purchase_id,
         start_date=start_date,
         expire_date=expires_date,
         history=[history_entry],
