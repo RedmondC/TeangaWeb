@@ -40,8 +40,7 @@ def handle_purchase(data: dict):
                         convert_google_play_response_to_subscription(
                             google_result,
                             action_title,
-                            description,
-                            data.get("subscriptionId"),
+                            description
                         )
                     ]
                 )
@@ -79,11 +78,12 @@ def parse_notification(data: dict) -> (bool, str, str):
 
 
 def convert_google_play_response_to_subscription(
-    data: dict, action_title: str, history_description: str, product_id: str
+    data: dict, action_title: str, history_description: str
 ) -> Subscription:
     start_date = int(data.get("startTimeMillis", 0))
     expire_date = int(data.get("expiryTimeMillis", 0))
-    purchase_id = data.get("orderId")
+    purchase_token = data.get("purchaseToken")
+    subscription_id = data.get("subscriptionId")
 
     history_entry = SubscriptionHistoryEntry(
         created_at=start_date,
@@ -92,8 +92,8 @@ def convert_google_play_response_to_subscription(
     )
 
     return Subscription(
-        product_id=product_id,
-        purchase_id=purchase_id,
+        product_id=subscription_id,
+        purchase_id=purchase_token,
         start_date=start_date,
         expire_date=expire_date,
         history=[history_entry],
