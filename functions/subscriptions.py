@@ -78,10 +78,17 @@ def _write_subscriptions_to_db(
             "purchaseId": subscription.purchase_id,
             "startDate": subscription.start_date,
             "expireDate": subscription.expire_date,
-            "history": [entry.__dict__ for entry in subscription.history],
+            "history": [
+                {_to_camel_case(k): v for k, v in entry.__dict__.items()}
+                for entry in subscription.history
+            ]
         }
         subscriptions_reference.document(subscription.purchase_id).set(doc_data)
 
+
+def _to_camel_case(snake_str):
+    parts = snake_str.split('_')
+    return parts[0] + ''.join(word.capitalize() for word in parts[1:])
 
 def _get_transaction_id(sub: Subscription) -> str:
     return sub.purchase_id
