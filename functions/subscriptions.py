@@ -1,3 +1,5 @@
+import re
+
 from dataclasses import dataclass, field
 from typing import List
 
@@ -62,7 +64,10 @@ def _get_subscription_status(
                 start_date=data["startDate"],
                 expire_date=data["expireDate"],
                 history=[
-                    SubscriptionHistoryEntry(**entry) for entry in data["history"]
+                    SubscriptionHistoryEntry(
+                        **{_to_snake_case(k): v for k, v in entry.items()}
+                    )
+                    for entry in data["history"]
                 ],
             )
             subscriptions.append(subscription)
@@ -89,6 +94,9 @@ def _write_subscriptions_to_db(
 def _to_camel_case(snake_str):
     parts = snake_str.split('_')
     return parts[0] + ''.join(word.capitalize() for word in parts[1:])
+
+def _to_snake_case(camel_str):
+    return re.sub(r'(?<!^)(?=[A-Z])', '_', camel_str).lower()
 
 def _get_transaction_id(sub: Subscription) -> str:
     return sub.purchase_id
