@@ -41,7 +41,7 @@ def verify_google():
     try:
         handle_purchase(
             data=data.get("subscriptionNotification"),
-            event_time= 123456789,#int(data.get("eventTimeMillis")),
+            event_time= int(data.get("eventTimeMillis")),
             credentials=credentials,
             subscriptions_reference=subscriptions_reference,
         )

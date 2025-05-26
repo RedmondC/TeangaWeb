@@ -27,7 +27,7 @@ def handle_purchase(data: dict, event_time: int , credentials, subscriptions_ref
             )
 
             print(google_result)
-            if google_result.get("purchaseState") == 0:
+            if google_result.get("purchaseState") == 1:
                 update_subscription_status(
                     [
                         convert_google_play_response_to_subscription(
