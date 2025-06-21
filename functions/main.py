@@ -73,7 +73,7 @@ def verify_apple():
         logging.error("Apple - An unexpected error occurred for notification: ", data)
         return "An unexpected error occurred.", 500
 
-@app.route("dev/sandbox-user-update-apple", methods=["POST"])
+@app.route("/dev/sandbox-user-update-apple", methods=["POST"])
 def verify_apple():
     data = request.get_json()
     signed_payload = data.get("signedPayload")
