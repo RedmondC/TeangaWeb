@@ -1,25 +1,17 @@
 import logging
-import os
 
 from googleapiclient.discovery import build
-from google.oauth2 import service_account
-from json import loads
 from subscriptions import (
     update_subscription_status,
     Subscription,
     SubscriptionHistoryEntry,
 )
 
+sub_duration = {
+    "product_id_example" : 2629800000 # one month
+}
 
-def handle_purchase(data: dict):
-    google_services = os.environ.get('google_services')
-    if google_services is None:
-        print("google_services environment variable is missing!")
-
-    credentials = service_account.Credentials.from_service_account_info(
-        loads(google_services)
-    )
-
+def handle_purchase(data: dict, event_time: int , credentials, subscriptions_reference):
     is_purchase, action_title, description = parse_notification(data)
     if is_purchase:
         with build("androidpublisher", "v3", credentials=credentials) as service:
@@ -34,16 +26,15 @@ def handle_purchase(data: dict):
                 .execute()
             )
 
-            if google_result is not None:
+            print(google_result)
+            if google_result.get("paymentState") == 1:
                 update_subscription_status(
                     [
                         convert_google_play_response_to_subscription(
-                            google_result,
-                            action_title,
-                            description,
-                            data.get("subscriptionId"),
+                            data.get("purchaseToken"), action_title, description, event_time, data.get("subscriptionId")
                         )
-                    ]
+                    ],
+                    subscriptions_reference,
                 )
                 service.purchases().subscriptions().acknowledge(
                     packageName="com.teanga",
@@ -66,35 +57,33 @@ def parse_notification(data: dict) -> (bool, str, str):
         return (
             True,
             "Product Purchased",
-            f"Subscription started for product {subscription_id} with order ID {purchase_token}.",
+            f"Subscription started for product {subscription_id} with purchase token {purchase_token}.",
         )
     elif notification_type in [1, 2]:
         return (
             True,
             "Product Renewed",
-            f"Subscription renewed for product {subscription_id} with order ID {purchase_token}.",
+            f"Subscription renewed for product {subscription_id} with original purchase token {purchase_token}.",
         )
 
     return False, None, None
 
 
 def convert_google_play_response_to_subscription(
-    data: dict, action_title: str, history_description: str, product_id: str
+    purchase_token: str, action_title: str, history_description: str, event_time: int, subscription_id: str
 ) -> Subscription:
-    start_date = int(data.get("startTimeMillis", 0))
-    expire_date = int(data.get("expiryTimeMillis", 0))
-    purchase_id = data.get("orderId")
+    expire_date = event_time + sub_duration[subscription_id]
 
     history_entry = SubscriptionHistoryEntry(
-        created_at=start_date,
+        created_at=event_time,
         action_title=action_title,
         description=history_description,
     )
 
     return Subscription(
-        product_id=product_id,
-        purchase_id=purchase_id,
-        start_date=start_date,
+        product_id=subscription_id,
+        purchase_id=purchase_token,
+        start_date=event_time,
         expire_date=expire_date,
         history=[history_entry],
     )

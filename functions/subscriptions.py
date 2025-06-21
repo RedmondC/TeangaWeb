@@ -1,22 +1,7 @@
-import os
+import re
 
 from dataclasses import dataclass, field
-from google.oauth2 import service_account
-from google.cloud import firestore
 from typing import List
-from json import loads
-
-google_services = os.environ.get('google_services')
-if google_services is None:
-    print("google_services environment variable is missing!")
-
-
-credentials = service_account.Credentials.from_service_account_info(
-        loads(google_services)
-    )
-
-db = firestore.Client(credentials=credentials)
-subscriptions_reference = db.collection("subscriptions")
 
 
 @dataclass
@@ -46,10 +31,31 @@ class UserSubscriptions:
     subscriptions: List[Subscription] = field(default_factory=list)
 
 
-def get_subscription_status(transaction_ids: List[str]) -> UserSubscriptions:
+def update_subscription_status(
+    new_subscriptions: List[Subscription], subscriptions_reference
+):
+    user_subs = _get_subscription_status(
+        new_subscriptions,
+        subscriptions_reference=subscriptions_reference,
+    )
+
+    merged = _merge_subscriptions(
+        user_subs.subscriptions,
+        new_subscriptions,
+    )
+
+    user_subs.subscriptions = merged
+    _write_subscriptions_to_db(
+        user_subs, subscriptions_reference=subscriptions_reference
+    )
+
+
+def _get_subscription_status(
+    new_subscriptions: List[Subscription], subscriptions_reference
+) -> UserSubscriptions:
     subscriptions = []
-    for tx_id in transaction_ids:
-        doc = subscriptions_reference.document(tx_id).get()
+    for sub in new_subscriptions:
+        doc = subscriptions_reference.document(sub.purchase_id).get()
         if doc.exists:
             data = doc.to_dict()
             subscription = Subscription(
@@ -58,45 +64,45 @@ def get_subscription_status(transaction_ids: List[str]) -> UserSubscriptions:
                 start_date=data["startDate"],
                 expire_date=data["expireDate"],
                 history=[
-                    SubscriptionHistoryEntry(**entry) for entry in data["history"]
+                    SubscriptionHistoryEntry(
+                        **{_to_snake_case(k): v for k, v in entry.items()}
+                    )
+                    for entry in data["history"]
                 ],
             )
             subscriptions.append(subscription)
     return UserSubscriptions(subscriptions=subscriptions)
 
 
-def write_subscriptions_to_db(user_subscriptions: UserSubscriptions):
+def _write_subscriptions_to_db(
+    user_subscriptions: UserSubscriptions, subscriptions_reference
+):
     for subscription in user_subscriptions.subscriptions:
         doc_data = {
             "productId": subscription.product_id,
             "purchaseId": subscription.purchase_id,
             "startDate": subscription.start_date,
             "expireDate": subscription.expire_date,
-            "history": [entry.__dict__ for entry in subscription.history],
+            "history": [
+                {_to_camel_case(k): v for k, v in entry.__dict__.items()}
+                for entry in subscription.history
+            ]
         }
         subscriptions_reference.document(subscription.purchase_id).set(doc_data)
 
 
-def update_subscription_status(
-    new_subscriptions: List[Subscription],
-) -> UserSubscriptions:
-    user_subs = get_subscription_status(
-        list(map(get_transaction_id, new_subscriptions))
-    )
-    merged = merge_subscriptions(
-        user_subs.subscriptions,
-        new_subscriptions,
-    )
-    user_subs.subscriptions = merged
-    write_subscriptions_to_db(user_subs)
-    return user_subs
+def _to_camel_case(snake_str):
+    parts = snake_str.split('_')
+    return parts[0] + ''.join(word.capitalize() for word in parts[1:])
 
+def _to_snake_case(camel_str):
+    return re.sub(r'(?<!^)(?=[A-Z])', '_', camel_str).lower()
 
-def get_transaction_id(sub: Subscription) -> str:
+def _get_transaction_id(sub: Subscription) -> str:
     return sub.purchase_id
 
 
-def merge_subscriptions(
+def _merge_subscriptions(
     current: List[Subscription], new_subs: List[Subscription]
 ) -> List[Subscription]:
     merged = current[:]
