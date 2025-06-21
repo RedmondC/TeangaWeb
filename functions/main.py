@@ -74,7 +74,7 @@ def verify_apple():
         return "An unexpected error occurred.", 500
 
 @app.route("/dev/sandbox-user-update-apple", methods=["POST"])
-def verify_apple():
+def verify_apple_dev():
     data = request.get_json()
     signed_payload = data.get("signedPayload")
     try:
