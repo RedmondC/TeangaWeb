@@ -11,7 +11,7 @@ from google.oauth2 import service_account
 from json import loads
 from googleapiclient.errors import HttpError
 from index_page import render_index
-from flask import Flask, request
+from flask import Flask, render_template, request
 
 print("Starting Flask app...")
 
@@ -89,6 +89,11 @@ def verify_apple_dev():
     except Exception:
         logging.error("Apple - An unexpected error occurred for notification: ", data)
         return "An unexpected error occurred.", 500
+
+
+@app.route("/privacy", methods=["GET"])
+def privacy():
+    return render_template("privacy.html")
 
 
 @app.route("/")
