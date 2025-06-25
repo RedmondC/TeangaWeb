@@ -19,7 +19,7 @@
 
     #logo {
       width: 55%;
-      display:inline-grid
+      display:inline-grid;
       align-self: center;
     }
 
@@ -36,7 +36,7 @@
        width: 95%;
        align-self: center;
        box-sizing: border-box;
-       display:inline-grid
+       display:inline-grid;
        padding: 10px;
        border: 5px double rgb(59, 104, 133);
        border-radius: 25px;
