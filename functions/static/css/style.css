@@ -35,6 +35,7 @@
        box-sizing: border-box;
        padding: 10px;
        border: 5px double rgb(59, 104, 133);
+       border-radius: 25px;
     }
 
     p, strong, li {
