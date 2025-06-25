@@ -10,6 +10,7 @@
       box-sizing: border-box;
       width: 100%;
       display: inline-block;
+      text-align: center;
     }
 
     .row > * {
@@ -18,6 +19,7 @@
 
     #logo {
       width: 55%;
+      align-self: center;
     }
 
     #basicInfo {
