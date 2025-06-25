@@ -3,6 +3,7 @@
     body {
       margin: auto;
       padding: 20px;
+      display:inline-grid;
       text-align: center;
     }
 
@@ -19,7 +20,6 @@
 
     #logo {
       width: 55%;
-      display:inline-grid;
       align-self: center;
     }
 
@@ -36,7 +36,6 @@
        width: 95%;
        align-self: center;
        box-sizing: border-box;
-       display:inline-grid;
        padding: 10px;
        border: 5px double rgb(59, 104, 133);
        border-radius: 25px;
