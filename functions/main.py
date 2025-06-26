@@ -11,7 +11,7 @@ from google.oauth2 import service_account
 from json import loads
 from googleapiclient.errors import HttpError
 from index_page import render_index
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 
 print("Starting Flask app...")
 
@@ -93,7 +93,8 @@ def verify_apple_dev():
 
 @app.route("/privacy", methods=["GET"])
 def privacy():
-    return render_template("privacy.html")
+    logo = url_for("static", filename="header_with_dara_knot.png")
+    return render_template("privacy.html", logo=logo)
 
 
 @app.route("/")
