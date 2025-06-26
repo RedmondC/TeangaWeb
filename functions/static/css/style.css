@@ -33,7 +33,7 @@
     }
 
     #privacy {
-       width: 95%;
+       width: 50%;
        box-sizing: border-box;
        padding: 10px;
        border: 5px double rgb(59, 104, 133);
@@ -70,6 +70,10 @@
     }
 
     @media (orientation: portrait) {
+      #privacy {
+         width: 95%;
+      }
+
       #logo {
         width: 80%;
       }
