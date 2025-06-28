@@ -90,11 +90,15 @@ def verify_apple_dev():
         logging.error("Apple - An unexpected error occurred for notification: ", data)
         return "An unexpected error occurred.", 500
 
-
 @app.route("/privacy", methods=["GET"])
 def privacy():
     logo = url_for("static", filename="header_with_dara_knot.png")
     return render_template("privacy.html", logo=logo)
+
+@app.route("/delete", methods=["GET"])
+def delete_me():
+    logo = url_for("static", filename="header_with_dara_knot.png")
+    return render_template("delete.html", logo=logo)
 
 
 @app.route("/")
