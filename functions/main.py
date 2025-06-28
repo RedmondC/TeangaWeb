@@ -90,28 +90,15 @@ def verify_apple_dev():
         logging.error("Apple - An unexpected error occurred for notification: ", data)
         return "An unexpected error occurred.", 500
 
-@app.route("/dev/sandbox-user-update-apple", methods=["GET"])
-def verify_apple_dev():
-    data = request.get_json()
-    signed_payload = data.get("signedPayload")
-    try:
-        if not signed_payload:
-            logging.info("No JSON signed payload received in request %s", data)
-            return "Invalid JSON", 400
-        else:
-            apple_notifications(signed_payload, subscriptions_reference)
-    except VerificationException:
-        logging.exception("Failed to handle Apple notification: ", data)
-        return "An error occurred", 400
-    except Exception:
-        logging.error("Apple - An unexpected error occurred for notification: ", data)
-        return "An unexpected error occurred.", 500
-
-
 @app.route("/privacy", methods=["GET"])
 def privacy():
     logo = url_for("static", filename="header_with_dara_knot.png")
     return render_template("privacy.html", logo=logo)
+
+@app.route("/delete_me", methods=["GET"])
+def delete_me():
+    logo = url_for("static", filename="header_with_dara_knot.png")
+    return render_template("delete.html", logo=logo)
 
 
 @app.route("/")
