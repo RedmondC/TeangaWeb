@@ -95,7 +95,7 @@ def privacy():
     logo = url_for("static", filename="header_with_dara_knot.png")
     return render_template("privacy.html", logo=logo)
 
-@app.route("/delete_me", methods=["GET"])
+@app.route("/delete", methods=["GET"])
 def delete_me():
     logo = url_for("static", filename="header_with_dara_knot.png")
     return render_template("delete.html", logo=logo)
