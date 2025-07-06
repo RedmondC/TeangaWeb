@@ -74,11 +74,6 @@
          width: 95%;
       }
 
-      #panels {
-         width: 0%;
-         height: 0vh;
-      }
-
       .column {
         width: 100%;
       }
@@ -96,6 +91,7 @@
 
       #basicInfo {
         width: 100%;
+        background: rgb(255,255,255);
       }
     }
 </style>
