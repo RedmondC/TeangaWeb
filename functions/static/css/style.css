@@ -18,6 +18,10 @@
       vertical-align: middle;
     }
 
+    .panel {
+      width: 15%;
+    }
+
     #logo {
       width: 55%;
       align-self: center;
@@ -80,6 +84,10 @@
 
       .column {
         width: 100%;
+      }
+
+      .panel {
+        width: 0%;
       }
 
       .spacer {
