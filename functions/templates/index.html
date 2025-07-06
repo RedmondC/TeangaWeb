@@ -11,12 +11,18 @@
         <div style="text-align: center;">
             <div id="panels" style="
                 background-image: linear-gradient(to right,
-                rgba(255, 255, 255, 0),
-                rgba(255, 255, 255, 1),
-                rgba(255, 255, 255, 1),
-                rgba(255, 255, 255, 1),
-                rgba(255, 255, 255, 0)),
-                url({{panel}});"></div>
+                    rgba(255, 255, 255, 0),
+                    rgba(255, 255, 255, 1),
+                    rgba(255, 255, 255, 1),
+                    rgba(255, 255, 255, 1),
+                    rgba(255, 255, 255, 0)),
+                    url({{panel}});
+
+                @media (orientation: portrait) {
+                    background-image: url({{panel}});
+                    opacity:0.4;
+                }
+            "></div>
 
             <div class="centralColumn">
                 <img id="logo" src='{{logo}}' alt="Logo">
