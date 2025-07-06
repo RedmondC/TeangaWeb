@@ -10,20 +10,22 @@
     <body>
         <img class="panel" src='{{panel}}' alt="Decorative side panel">
 
-        <div class="row">
-            <img id="logo" src='{{logo}}' alt="Logo">
-        </div>
-
-        <div class="row">
-            <div id="basicInfo" class="column">
-                {{irish_information | safe}}
-
-                <div class="spacer"></div>
-
-                {{english_information | safe}}
+        <div class="column">
+            <div class="row">
+                <img id="logo" src='{{logo}}' alt="Logo">
             </div>
 
-            <img class="column" src='{{layered_screens}}'>
+            <div class="row">
+                <div id="basicInfo" class="column">
+                    {{irish_information | safe}}
+
+                    <div class="spacer"></div>
+
+                    {{english_information | safe}}
+                </div>
+
+                <img class="column" src='{{layered_screens}}'>
+            </div>
         </div>
 
         <img class="panel" src='{{panel}}' alt="Decorative side panel">
