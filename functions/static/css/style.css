@@ -20,10 +20,11 @@
 
     .panel {
       width: 15%;
+      height: 100%;
     }
 
     #logo {
-      width: 55%;
+      width: 100%;
       align-self: center;
     }
 
@@ -55,6 +56,14 @@
       width: 50%;
     }
 
+    .centralColumn {
+      box-sizing: border-box;
+      display: inline-block;
+      padding: 10px;
+      border-radius: 25px;
+      width: 55%;
+    }
+
     .badge {
       padding: 10px;
       display: inline-block;
@@ -78,11 +87,15 @@
          width: 95%;
       }
 
-      #logo {
+      body {
         width: 80%;
       }
 
       .column {
+        width: 100%;
+      }
+
+      .centralColumn {
         width: 100%;
       }
 
