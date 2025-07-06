@@ -8,27 +8,29 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     </head>
     <body>
-        <div id="panels" style="
-            background-image: linear-gradient(to right,
-            rgba(255, 255, 255, 0),
-            rgba(255, 255, 255, 1),
-            rgba(255, 255, 255, 1),
-            rgba(255, 255, 255, 1),
-            rgba(255, 255, 255, 0)),
-            url({{panel}});"></div>
+        <div style="text-align: center;">
+            <div id="panels" style="
+                background-image: linear-gradient(to right,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 1),
+                rgba(255, 255, 255, 1),
+                rgba(255, 255, 255, 1),
+                rgba(255, 255, 255, 0)),
+                url({{panel}});"></div>
 
-        <div class="centralColumn">
-            <img id="logo" src='{{logo}}' alt="Logo">
+            <div class="centralColumn">
+                <img id="logo" src='{{logo}}' alt="Logo">
 
-            <div id="basicInfo" class="column">
-                {{irish_information | safe}}
+                <div id="basicInfo" class="column">
+                    {{irish_information | safe}}
 
-                <div class="spacer"></div>
+                    <div class="spacer"></div>
 
-                {{english_information | safe}}
+                    {{english_information | safe}}
+                </div>
+
+                <img class="column" src='{{layered_screens}}'>
             </div>
-
-            <img class="column" src='{{layered_screens}}'>
         </div>
     </body>
 </html>
