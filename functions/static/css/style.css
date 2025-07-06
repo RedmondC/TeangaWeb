@@ -4,23 +4,14 @@
       margin: auto;
       padding: 20px;
       display:inline-grid;
-      text-align: justify;
-    }
-
-    .row {
-      box-sizing: border-box;
-      width: 100%;
-      display: inline-block;
       text-align: center;
     }
 
-    .row > * {
-      vertical-align: middle;
-    }
-
-    .panel {
-      width: 15%;
-      height: 100%;
+    #panels {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 100vh;
       background-repeat: repeat;
     }
 
@@ -54,7 +45,7 @@
       display: inline-block;
       padding: 10px;
       border-radius: 25px;
-      width: 50%;
+      width: 90%;
     }
 
     .centralColumn {
@@ -78,18 +69,9 @@
       background-color: rgb(59, 104, 133);
     }
 
-    .container {
-      height: 50%;
-      max-width: 30%;
-    }
-
     @media (orientation: portrait) {
       #privacy {
          width: 95%;
-      }
-
-      body {
-        width: 80%;
       }
 
       .column {
@@ -98,10 +80,6 @@
 
       .centralColumn {
         width: 100%;
-      }
-
-      .panel {
-        width: 0%;
       }
 
       .spacer {
@@ -113,12 +91,6 @@
 
       #basicInfo {
         width: 100%;
-      }
-
-      .container {
-        height: 6vh;
-        max-width: 80%;
-        display: inline-block;
       }
     }
 </style>

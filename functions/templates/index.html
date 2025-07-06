@@ -8,7 +8,14 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     </head>
     <body>
-        <div class="panel" style="background-image: url({{panel}});"></div>
+        <div id="panels" style="
+            linear-gradient(to right,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 1),
+            rgba(255, 255, 255, 1),
+            rgba(255, 255, 255, 1),
+            rgba(255, 255, 255, 0)),
+            url({{panel}});"></div>
 
         <div class="centralColumn">
             <img id="logo" src='{{logo}}' alt="Logo">
@@ -23,7 +30,5 @@
 
             <img class="column" src='{{layered_screens}}'>
         </div>
-
-        <div class="panel" style="background-image: url({{panel}});"></div>
     </body>
 </html>
