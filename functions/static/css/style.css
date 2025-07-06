@@ -3,14 +3,13 @@
     body {
       margin: auto;
       padding: 20px;
-      width: 100%;
       display:inline-grid;
       text-align: center;
     }
 
     .row {
       box-sizing: border-box;
-      width: 55%;
+      width: 100%;
       display: inline-block;
       text-align: center;
     }
