@@ -58,8 +58,7 @@
 
     .badge {
       padding: 10px;
-      display:table-cell;
-      height: 60px;
+      display: inline-block;
       vertical-align: middle;
     }
 
