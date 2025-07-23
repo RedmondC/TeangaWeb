@@ -1,25 +1,22 @@
 <style>
-
     body {
       margin: auto;
       padding: 20px;
-      display:inline-grid;
       text-align: center;
     }
 
-    .row {
-      box-sizing: border-box;
+    #panels {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -5;
       width: 100%;
-      display: inline-block;
-      text-align: center;
-    }
-
-    .row > * {
-      vertical-align: middle;
+      height: 100vh;
+      background-repeat: repeat;
     }
 
     #logo {
-      width: 55%;
+      width: 100%;
       align-self: center;
     }
 
@@ -48,13 +45,21 @@
       display: inline-block;
       padding: 10px;
       border-radius: 25px;
-      width: 50%;
+      width: 90%;
+    }
+
+    .centralColumn {
+      box-sizing: border-box;
+      display: inline-block;
+      padding: 10px;
+      border-radius: 25px;
+      width: 55%;
     }
 
     .badge {
       padding: 10px;
       display: inline-block;
-        vertical-align: middle;
+      vertical-align: middle;
     }
 
     .spacer {
@@ -64,21 +69,16 @@
       background-color: rgb(59, 104, 133);
     }
 
-    .container {
-      height: 50%;
-      max-width: 30%;
-    }
-
     @media (orientation: portrait) {
       #privacy {
          width: 95%;
       }
 
-      #logo {
-        width: 80%;
+      .column {
+        width: 100%;
       }
 
-      .column {
+      .centralColumn {
         width: 100%;
       }
 
@@ -91,12 +91,7 @@
 
       #basicInfo {
         width: 100%;
-      }
-
-      .container {
-        height: 6vh;
-        max-width: 80%;
-        display: inline-block;
+        background: rgb(255,255,255);
       }
     }
 </style>

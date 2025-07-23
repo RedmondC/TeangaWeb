@@ -3,24 +3,35 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="{{ url_for('static', filename='icon.png') }}">
         <title>Teanga</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     </head>
     <body>
-        <div class="row">
-            <img id="logo" src='{{logo}}' alt="Logo">
-        </div>
+        <div style="text-align: center;">
+            <div id="panels" style="
+                background-image: linear-gradient(to right,
+                    rgba(255, 255, 255, 0),
+                    rgba(255, 255, 255, 1),
+                    rgba(255, 255, 255, 1),
+                    rgba(255, 255, 255, 1),
+                    rgba(255, 255, 255, 0)),
+                    url({{panel}});
+            "></div>
 
-        <div class="row">
-            <div id="basicInfo" class="column">
-                {{irish_information | safe}}
+            <div class="centralColumn">
+                <img id="logo" src='{{logo}}' alt="Logo">
 
-                <div class="spacer"></div>
+                <div id="basicInfo" class="column">
+                    {{irish_information | safe}}
 
-                {{english_information | safe}}
+                    <div class="spacer"></div>
+
+                    {{english_information | safe}}
+                </div>
+
+                <img class="column" src='{{layered_screens}}'>
             </div>
-
-            <img class="column" src='{{layered_screens}}'>
         </div>
     </body>
 </html>

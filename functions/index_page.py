@@ -3,6 +3,7 @@ from flask import render_template, url_for
 
 def render_index():
     logo = url_for("static", filename="header_with_dara_knot.png")
+    panel = url_for("static", filename="panel.png")
     layered_screens = url_for("static", filename="layered_screens.png")
     google_badge = url_for(
         "static", filename="GetItOnGooglePlay_Badge_Web_color_English.png"
@@ -14,6 +15,7 @@ def render_index():
     return render_template(
         "index.html",
         logo=logo,
+        panel=panel,
         layered_screens=layered_screens,
         irish_information=generate_information(
             google_badge=google_badge,
