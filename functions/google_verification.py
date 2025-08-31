@@ -8,7 +8,8 @@ from subscriptions import (
 )
 
 sub_duration = {
-    "product_id_example" : 2629800000 # one month
+    "product_id_example" : 2629800000, # one month
+    "monthly_standard_0" : 2629800000 # one month
 }
 
 def handle_purchase(data: dict, event_time: int , credentials, subscriptions_reference):
@@ -26,7 +27,7 @@ def handle_purchase(data: dict, event_time: int , credentials, subscriptions_ref
                 .execute()
             )
 
-            print(google_result)
+            print(f"Google Result : {google_result}")
             if google_result.get("paymentState") == 1:
                 update_subscription_status(
                     [
