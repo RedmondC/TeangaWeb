@@ -22,7 +22,13 @@ class Subscription:
     def update(self, new_sub: "Subscription") -> "Subscription":
         self.start_date = new_sub.start_date
         self.expire_date = new_sub.expire_date
-        self.history.extend(new_sub.history)
+        seen = {(entry.action_title, entry.created_at) for entry in self.history}
+        for entry in new_sub.history:
+            key = (entry.action_title, entry.created_at)
+            if key in seen:
+                continue
+            self.history.append(entry)
+            seen.add(key)
         return self
 
 
