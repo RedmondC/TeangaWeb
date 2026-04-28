@@ -28,6 +28,13 @@ def handle_purchase(data: dict, event_time: int , credentials, subscriptions_ref
             )
 
             print(f"Google Result : {google_result}")
+
+            if google_result.get("acknowledgementState") == 1:
+                logging.info(
+                    f"Subscription {data.get('subscriptionId')} with token {data.get('purchaseToken')} already acknowledged; skipping."
+                )
+                return
+
             if google_result.get("paymentState") == 1:
                 update_subscription_status(
                     [

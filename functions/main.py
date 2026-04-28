@@ -45,8 +45,14 @@ def verify_google():
             credentials=credentials,
             subscriptions_reference=subscriptions_reference,
         )
-    except HttpError:
-        logging.error(f"Google - A http error occurred for request: {data}")
+    except HttpError as e:
+        resp = getattr(e, "resp", None)
+        status = resp.status if resp is not None else None
+        reason = resp.reason if resp is not None else None
+        content = e.content.decode("utf-8", errors="replace") if isinstance(e.content, (bytes, bytearray)) else str(e.content)
+        logging.error(
+            f"Google - HttpError {status} {reason} for request: {data}. Response body: {content}"
+        )
         return "An error occurred.", 400
     except Exception as e:
         logging.error(f"Google - An unexpected error occurred for request: {data}")
